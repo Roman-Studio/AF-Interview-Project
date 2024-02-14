@@ -10,7 +10,7 @@ namespace AFSInterview.Core
         where TPoolElement : AFObserverMonoBehaviour<TPoolObservedType>
     {
         [Inject]
-        protected DiContainer _ZenjectContainer;
+        protected AFGenericGameObjectFactory _ElementsFactory;
         
         [SerializeField]
         protected TPoolElement _PoolElementPrefab;
@@ -34,7 +34,7 @@ namespace AFSInterview.Core
         {
             if (string.IsNullOrEmpty(_PoolElementPrefab.gameObject.scene.name) || _ScenePrefabPresentInPool)
             {
-                return _ZenjectContainer.InstantiatePrefab(_PoolElementPrefab, _TargetTransform).GetComponent<TPoolElement>();
+                return _ElementsFactory.Create(_PoolElementPrefab, _TargetTransform);
             }
             
             _ScenePrefabPresentInPool = true;

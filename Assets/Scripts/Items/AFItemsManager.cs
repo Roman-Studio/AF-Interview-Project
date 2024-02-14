@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using AFSInterview.Core;
+using UnityEngine;
 using Zenject;
 
 namespace AFSInterview.Items
@@ -6,7 +7,7 @@ namespace AFSInterview.Items
 	public class AFItemsManager : MonoBehaviour
 	{
 		[Inject]
-		private DiContainer zenjectContainer;
+		private AFGenericGameObjectFactory itemsFactory;    
 		
 		[SerializeField] 
 		private AFInventoryController inventoryController;
@@ -77,9 +78,8 @@ namespace AFSInterview.Items
 				0f,
 				Random.Range(spawnAreaBounds.min.z, spawnAreaBounds.max.z)
 			);
-			
-			//TODO: Change to factory pattern.
-			zenjectContainer.InstantiatePrefab(itemPrefab, position, Quaternion.identity, itemSpawnParent);
+
+			itemsFactory.Create(itemPrefab, position, Quaternion.identity, itemSpawnParent);
 		}
 
 		private void TryPickUpItem()

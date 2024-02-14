@@ -23,6 +23,7 @@ namespace AFSInterview.Core
 
         public override void InstallBindings()
         {
+            Container.BindFactory<MonoBehaviour, AFGenericGameObjectFactory>();
             QueueInstance(moneyManager);
             QueueInstance(unitsManager);
             QueueInstance(turnManager);
