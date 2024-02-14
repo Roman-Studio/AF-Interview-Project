@@ -223,6 +223,7 @@ MonoBehaviour:
   unitName: {fileID: 3927617598734489091}
   unitDamage: {fileID: 3681969502910528667}
   unitArmor: {fileID: 4479961534537676305}
+  panelFill: {fileID: 8562206474153960686}
   panelBorder: {fileID: 4371633839176026500}
   selectedBorderColor: {r: 1, g: 1, b: 1, a: 1}
   normalBorderColor: {r: 0, g: 0, b: 0, a: 1}

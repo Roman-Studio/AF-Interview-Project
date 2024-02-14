@@ -16,6 +16,9 @@ namespace AFSInterview.Units.UI
                 
         [SerializeField]
         private TextMeshProUGUI unitArmor;
+        
+        [SerializeField]
+        private Image panelFill;
 
         [SerializeField]
         private Image panelBorder;
@@ -50,6 +53,7 @@ namespace AFSInterview.Units.UI
             unitName.text = ObservedObject.UnitData.name;
             unitDamage.text = $"D: {ObservedObject.AttackDamage}";
             unitArmor.text = $"A: {ObservedObject.ArmorPoints}";
+            panelFill.color = ObservedObject.UnitArmy.ArmyColor;
 
             if (ObservedObject.IsHovered)
             {

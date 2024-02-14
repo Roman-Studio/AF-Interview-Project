@@ -5,6 +5,9 @@ namespace AFSInterview.Armies
 {
     public class AFArmy : MonoBehaviour
     {
+        [field: SerializeField]
+        public Color ArmyColor { get; private set; }
+        
         private void Awake()
         {
             AssignArmyToUnitsInChildren();
