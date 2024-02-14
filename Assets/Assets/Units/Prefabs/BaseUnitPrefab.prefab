@@ -197,6 +197,7 @@ MonoBehaviour:
   outline: {fileID: 5440427074321293612}
   selectedOutlineColor: {r: 1, g: 1, b: 1, a: 1}
   damageableOutlineColor: {r: 1, g: 0, b: 0, a: 1}
+  hoveredOutlineColor: {r: 0.39215687, g: 0.70980394, b: 0.9647059, a: 1}
 --- !u!1 &5179303449609961847
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,9 +358,6 @@ MonoBehaviour:
   <OnCurrentHealthPointsChanged>k__BackingField:
     m_PersistentCalls:
       m_Calls: []
-  <OnUnitDeath>k__BackingField:
-    m_PersistentCalls:
-      m_Calls: []
   <OnUnitSelected>k__BackingField:
     m_PersistentCalls:
       m_Calls:
@@ -390,6 +388,40 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  <OnUnitHovered>k__BackingField:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4224923761730900470}
+        m_TargetAssemblyTypeName: AFSInterview.Units.View.AFUnitOutline, AncientForge
+        m_MethodName: UpdateOutline
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  <OnUnitUnhovered>k__BackingField:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4224923761730900470}
+        m_TargetAssemblyTypeName: AFSInterview.Units.View.AFUnitOutline, AncientForge
+        m_MethodName: UpdateOutline
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  <IsHovered>k__BackingField: 0
+  <OnUnitDeath>k__BackingField:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &9142332226534944465
 MonoBehaviour:
   m_ObjectHideFlags: 0

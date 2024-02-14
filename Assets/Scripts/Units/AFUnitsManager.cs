@@ -2,6 +2,7 @@
 using System.Linq;
 using AFSInterview.Core;
 using AFSInterview.Turns;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
 using Zenject;
@@ -13,7 +14,7 @@ namespace AFSInterview.Units
         [Inject]
         private AFTurnManager turnManager;
         
-        [SerializeField]
+        [SerializeField, ReadOnly]
         private List<AFUnitInstance> registeredUnits = new ();
         public IReadOnlyList<AFUnitInstance> RegisteredUnits => registeredUnits;
 

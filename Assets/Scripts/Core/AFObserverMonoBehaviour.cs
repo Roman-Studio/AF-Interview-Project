@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace AFSInterview.Core
 {
@@ -8,6 +9,9 @@ namespace AFSInterview.Core
     {
         [field: SerializeField, ReadOnly]
         public TObservedType ObservedObject { get; protected set; }
+        
+        [field: SerializeField]
+        public UnityEvent<TObservedType> OnSetObservedObject { get; protected set; }
 
         public virtual void Set(TObservedType newObservedObject)
         {
@@ -22,6 +26,7 @@ namespace AFSInterview.Core
             }
 
             ObservedObject = newObservedObject;
+            OnSetObservedObject?.Invoke(ObservedObject);
             OnReactToChanges();
             RegisterEvents();
         }

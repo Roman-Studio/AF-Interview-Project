@@ -41,14 +41,25 @@ namespace AFSInterview.Units
         public bool HasDamageOverride => UnitData.HasDamageOverride;
         public AFAttackOverrideByAttribute AttackOverrideByAttribute => UnitData.AttackOverrideByAttribute;
         
-        [field: SerializeField]
-        public UnityEvent<AFUnitInstance> OnUnitDeath { get; private set; }
-        
-        [field: SerializeField]
+        [field: SerializeField, Foldout("Unit Selection")]
         public UnityEvent<AFUnitInstance> OnUnitSelected { get; private set; }
         
-        [field: SerializeField]
+        [field: SerializeField, Foldout("Unit Selection")]
         public UnityEvent<AFUnitInstance> OnUnitDeselected { get; private set; }
+
+        public bool IsSelected => unitsManager.CurrentTurnUnit == this;
+        
+        [field: SerializeField, Foldout("Unit Hover")]
+        public UnityEvent<AFUnitInstance> OnUnitHovered { get; private set; }
+        
+        [field: SerializeField, Foldout("Unit Hover")]
+        public UnityEvent<AFUnitInstance> OnUnitUnhovered { get; private set; }
+        
+        [field: SerializeField]
+        public bool IsHovered { get; private set; }
+        
+        [field: SerializeField]
+        public UnityEvent<AFUnitInstance> OnUnitDeath { get; private set; }
         
         private void Awake()
         {
@@ -73,6 +84,16 @@ namespace AFSInterview.Units
             unitsManager.OnSelectedUnitChanged.RemoveListener(UpdateUnitHighlight);
         }
 
+        private void OnMouseEnter()
+        {
+            HoverUnit();
+        }
+
+        private void OnMouseExit()
+        {
+            UnhoverUnit();
+        }
+
         public void SetUnitArmy(AFArmy army)
         {
             UnitArmy = army;
@@ -95,7 +116,7 @@ namespace AFSInterview.Units
 
         public bool CanBeDamaged()
         {
-            if (unitsManager.CurrentTurnUnit == this)
+            if (IsSelected)
             {
                 return false;
             }
@@ -142,6 +163,18 @@ namespace AFSInterview.Units
             {
                 OnUnitDeselected?.Invoke(this);
             }
+        }
+
+        public void HoverUnit()
+        {
+            IsHovered = true;
+            OnUnitHovered?.Invoke(this);
+        }
+
+        public void UnhoverUnit()
+        {
+            IsHovered = false;
+            OnUnitUnhovered.Invoke(this);
         }
     }
 }

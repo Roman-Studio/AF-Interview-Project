@@ -16,10 +16,20 @@ namespace AFSInterview.Units.View
 
         [SerializeField]
         private Color damageableOutlineColor;
+
+        [SerializeField]
+        private Color hoveredOutlineColor;
         
         public void UpdateOutline(AFUnitInstance unitInstance)
         {
-            if (unitsManager.CurrentTurnUnit == unitInstance)
+            if (unitInstance.IsHovered)
+            {
+                outline.OutlineColor = hoveredOutlineColor;
+                outline.enabled = true;
+                return;
+            }
+            
+            if (unitInstance.IsSelected)
             {
                 outline.OutlineColor = selectedOutlineColor;
                 outline.enabled = true;
