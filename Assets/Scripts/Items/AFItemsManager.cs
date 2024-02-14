@@ -73,6 +73,7 @@ namespace AFSInterview.Items
 				Random.Range(spawnAreaBounds.min.z, spawnAreaBounds.max.z)
 			);
 			
+			//TODO: Change to factory pattern.
 			Instantiate(itemPrefab, position, Quaternion.identity, itemSpawnParent);
 		}
 

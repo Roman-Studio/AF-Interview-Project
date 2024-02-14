@@ -1,8 +1,45 @@
 ﻿using System.Collections;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace AFSInterview.Core
 {
+    public abstract class AFObserverMonoBehaviour<TObservedType> : AFObserverMonoBehaviour
+    {
+        [field: SerializeField, ReadOnly]
+        public TObservedType ObservedObject { get; protected set; }
+
+        public virtual void Set(TObservedType newObservedObject)
+        {
+            if (Equals(ObservedObject, newObservedObject))
+            {
+                return;
+            }
+            
+            if (ObservedObject != null)
+            {
+                UnregisterEvents();
+            }
+
+            ObservedObject = newObservedObject;
+            OnReactToChanges();
+            RegisterEvents();
+        }
+
+        protected override void Start()
+        {
+            
+        }
+
+        protected override void OnDestroy()
+        {
+            if (ObservedObject != null)
+            {
+                UnregisterEvents();
+            }
+        }
+    }
+    
     /// <summary>
     /// Base class that can register to events to observe changes in desired values and react to it in the next frame.
     /// Part of observer pattern.
