@@ -10,6 +10,12 @@ namespace AFSInterview.Units.UI
     {
         [SerializeField]
         private TextMeshProUGUI unitName;
+        
+        [SerializeField]
+        private TextMeshProUGUI unitDamage;
+                
+        [SerializeField]
+        private TextMeshProUGUI unitArmor;
 
         [SerializeField]
         private Image panelBorder;
@@ -42,6 +48,8 @@ namespace AFSInterview.Units.UI
         protected override void OnReactToChanges()
         {
             unitName.text = ObservedObject.UnitData.name;
+            unitDamage.text = $"D: {ObservedObject.AttackDamage}";
+            unitArmor.text = $"A: {ObservedObject.ArmorPoints}";
 
             if (ObservedObject.IsHovered)
             {

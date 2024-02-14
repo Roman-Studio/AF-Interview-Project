@@ -118,21 +118,37 @@ namespace AFSInterview.Units
             UnitArmy = army;
         }
 
-        public float GetAttackDamage(IAFDamageable damageable)
+        public float GetPredictedAttackDamage(IAFDamageable damageable)
         {
-            SetCooldown();
-            
             if (damageable is not AFUnitInstance unitInstance)
             {
-                return AttackDamage;
+                return ValidateAttackDamage(AttackDamage);
             }
             
             if (!HasDamageOverride || unitInstance.Attributes.Count == 0)
             {
-                return AttackDamage;
+                return ValidateAttackDamage(AttackDamage - unitInstance.ArmorPoints);
             }
 
-            return unitInstance.Attributes.Any(attribute => attribute == AttackOverrideByAttribute.RequiredAttribute) ? AttackOverrideByAttribute.DamageOverride : AttackDamage;
+            return ValidateAttackDamage(unitInstance.Attributes.Any(attribute => attribute == AttackOverrideByAttribute.RequiredAttribute) ? 
+                AttackOverrideByAttribute.DamageOverride - unitInstance.ArmorPoints : 
+                AttackDamage - unitInstance.ArmorPoints);
+        }
+
+        private static float ValidateAttackDamage(float finalDamage)
+        {
+            if (finalDamage < 1f)
+            {
+                finalDamage = 1f;
+            }
+
+            return finalDamage;
+        }
+
+        public float GetAttackDamage(IAFDamageable damageable)
+        {
+            SetCooldown();
+            return GetPredictedAttackDamage(damageable);
         }
 
         private void SetCooldown()
@@ -157,14 +173,7 @@ namespace AFSInterview.Units
 
         public void Damage(float receivedDamage)
         {
-            var finalDamage = receivedDamage - ArmorPoints;
-
-            if (finalDamage < 1f)
-            {
-                finalDamage = 1f;
-            }
-
-            CurrentHealthPoints -= finalDamage;
+            CurrentHealthPoints -= receivedDamage;
             CheckIfDead();
         }
 

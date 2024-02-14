@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
+using Zenject;
 
 namespace AFSInterview.Core
 { 
     public abstract class AFMonoBehaviourPool<TPoolElement, TPoolObservedType> : AFObserverMonoBehaviour
         where TPoolElement : AFObserverMonoBehaviour<TPoolObservedType>
     {
+        [Inject]
+        protected DiContainer _ZenjectContainer;
+        
         [SerializeField]
         protected TPoolElement _PoolElementPrefab;
 
@@ -30,7 +34,7 @@ namespace AFSInterview.Core
         {
             if (string.IsNullOrEmpty(_PoolElementPrefab.gameObject.scene.name) || _ScenePrefabPresentInPool)
             {
-                return Instantiate(_PoolElementPrefab, _TargetTransform);
+                return _ZenjectContainer.InstantiatePrefab(_PoolElementPrefab, _TargetTransform).GetComponent<TPoolElement>();
             }
             
             _ScenePrefabPresentInPool = true;
