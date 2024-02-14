@@ -4,7 +4,7 @@
 	using UnityEngine;
 
 	[Serializable]
-	public class Item
+	public class AFItem
 	{
 		[SerializeField] private string name;
 		[SerializeField] private int value;
@@ -12,7 +12,7 @@
 		public string Name => name;
 		public int Value => value;
 
-		public Item(string name, int value)
+		public AFItem(string name, int value)
 		{
 			this.name = name;
 			this.value = value;
