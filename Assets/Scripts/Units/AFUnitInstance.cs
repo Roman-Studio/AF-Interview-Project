@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using AFSInterview.Armies;
+using AFSInterview.Turns;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
@@ -13,6 +13,9 @@ namespace AFSInterview.Units
     {
         [Inject]
         private AFUnitsManager unitsManager;
+
+        [Inject]
+        private AFTurnManager turnManager;
         
         [field: SerializeField, Expandable]
         public AFUnitData UnitData { get; private set; }
@@ -58,6 +61,20 @@ namespace AFSInterview.Units
         [field: SerializeField]
         public bool IsHovered { get; private set; }
         
+        private int currentCooldown;
+        public int CurrentCooldown
+        {
+            get => currentCooldown;
+            private set
+            {
+                currentCooldown = value;
+                OnCurrentCooldownChanged?.Invoke();
+            }
+        }
+        
+        [field: SerializeField]
+        public UnityEvent OnCurrentCooldownChanged { get; private set; }
+        
         [field: SerializeField]
         public UnityEvent<AFUnitInstance> OnUnitDeath { get; private set; }
         
@@ -77,11 +94,13 @@ namespace AFSInterview.Units
             CurrentHealthPoints = UnitData.HealthPoints;
             unitsManager.RegisterUnit(this);
             unitsManager.OnSelectedUnitChanged.AddListener(UpdateUnitHighlight);
+            unitsManager.OnSelectedUnitChanged.AddListener(UpdateUnitCooldown);
         }
 
         private void OnDestroy()
         {
             unitsManager.OnSelectedUnitChanged.RemoveListener(UpdateUnitHighlight);
+            unitsManager.OnSelectedUnitChanged.RemoveListener(UpdateUnitCooldown);
         }
 
         private void OnMouseEnter()
@@ -101,6 +120,8 @@ namespace AFSInterview.Units
 
         public float GetAttackDamage(IAFDamageable damageable)
         {
+            SetCooldown();
+            
             if (damageable is not AFUnitInstance unitInstance)
             {
                 return AttackDamage;
@@ -112,6 +133,11 @@ namespace AFSInterview.Units
             }
 
             return unitInstance.Attributes.Any(attribute => attribute == AttackOverrideByAttribute.RequiredAttribute) ? AttackOverrideByAttribute.DamageOverride : AttackDamage;
+        }
+
+        private void SetCooldown()
+        {
+            CurrentCooldown = UnitData.AttackInterval;
         }
 
         public bool CanBeDamaged()
@@ -175,6 +201,21 @@ namespace AFSInterview.Units
         {
             IsHovered = false;
             OnUnitUnhovered.Invoke(this);
+        }
+
+        private void UpdateUnitCooldown(AFUnitInstance selectedUnit)
+        {
+            if (selectedUnit != this)
+            {
+                return;
+            }
+            
+            CurrentCooldown--;
+
+            if (CurrentCooldown > 0)
+            {
+                turnManager.NextTurn();
+            }
         }
     }
 }

@@ -16,7 +16,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e03345bf9476dd149a8a15daf12acef5, type: 2}
   <HealthPoints>k__BackingField: 150
   <ArmorPoints>k__BackingField: 0
-  <AttackInterval>k__BackingField: 1
+  <AttackInterval>k__BackingField: 2
   <AttackDamage>k__BackingField: 20
   <HasDamageOverride>k__BackingField: 0
   <AttackOverrideByAttribute>k__BackingField:
