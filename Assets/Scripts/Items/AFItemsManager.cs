@@ -1,11 +1,16 @@
 ﻿using UnityEngine;
+using Zenject;
 
 namespace AFSInterview.Items
 {
 	public class AFItemsManager : MonoBehaviour
 	{
+		[Inject]
+		private DiContainer zenjectContainer;
+		
 		[SerializeField] 
 		private AFInventoryController inventoryController;
+		public AFInventoryController InventoryController => inventoryController;
 		
 		[SerializeField] 
 		private int itemSellMaxValue;
@@ -74,7 +79,7 @@ namespace AFSInterview.Items
 			);
 			
 			//TODO: Change to factory pattern.
-			Instantiate(itemPrefab, position, Quaternion.identity, itemSpawnParent);
+			zenjectContainer.InstantiatePrefab(itemPrefab, position, Quaternion.identity, itemSpawnParent);
 		}
 
 		private void TryPickUpItem()

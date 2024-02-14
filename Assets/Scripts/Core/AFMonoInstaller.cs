@@ -1,4 +1,5 @@
-﻿using AFSInterview.Money;
+﻿using AFSInterview.Items;
+using AFSInterview.Money;
 using AFSInterview.Turns;
 using AFSInterview.Units;
 using UnityEngine;
@@ -17,11 +18,15 @@ namespace AFSInterview.Core
         [SerializeField]
         private AFTurnManager turnManager;
 
+        [SerializeField]
+        private AFItemsManager itemsManager;
+
         public override void InstallBindings()
         {
             QueueInstance(moneyManager);
             QueueInstance(unitsManager);
             QueueInstance(turnManager);
+            QueueInstance(itemsManager);
         }
         
         private void QueueInstance<TInstance>(TInstance instance)

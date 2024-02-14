@@ -51,6 +51,7 @@ MonoBehaviour:
   moneyManager: {fileID: 8099747028314663205}
   unitsManager: {fileID: 7249835889194705269}
   turnManager: {fileID: 7298483492694902169}
+  itemsManager: {fileID: 8658122768660183471}
 --- !u!1001 &916142443920458267
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -221,6 +222,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1851937839473607407}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8658122768660183471 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7031442203869969216, guid: 75381bcc1f0032e4484757c30071da03,
+    type: 3}
+  m_PrefabInstance: {fileID: 1851937839473607407}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b6ca9eb0ebe4ffcb7fad76ea4a3b6ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4373039988821336932
 PrefabInstance:
   m_ObjectHideFlags: 0

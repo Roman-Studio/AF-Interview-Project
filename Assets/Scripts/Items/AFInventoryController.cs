@@ -1,4 +1,6 @@
-﻿using AFSInterview.Money;
+﻿using System;
+using AFSInterview.Money;
+using UnityEngine.Events;
 using Zenject;
 
 namespace AFSInterview.Items
@@ -9,12 +11,30 @@ namespace AFSInterview.Items
 	public class AFInventoryController : MonoBehaviour
 	{
 		[Inject]
+		private DiContainer zenjectContainer;
+		
+		[Inject]
 		private AFMoneyManager moneyManager;
 		
 		[SerializeField] 
 		private List<AFItem> items;
+		public IReadOnlyList<AFItem> Items => items;
+		
+		[field: SerializeField]
+		public UnityEvent<AFItem> OnItemAdded { get; private set; }
+		
+		[field: SerializeField]
+		public UnityEvent<AFItem> OnItemRemoved { get; private set; }
 		
 		public int ItemsCount => items.Count;
+
+		private void Awake()
+		{
+			foreach (var item in items)
+			{
+				zenjectContainer.Inject(item);
+			}
+		}
 
 		public void SellAllItemsUpToValue(int maxValue)
 		{
@@ -35,6 +55,19 @@ namespace AFSInterview.Items
 		public void AddItem(AFItem item)
 		{
 			items.Add(item);
+			OnItemAdded?.Invoke(item);
+		}
+
+		public bool RemoveItem(AFItem itemToRemove)
+		{
+			var result = items.Remove(itemToRemove);
+
+			if (result)
+			{
+				OnItemRemoved?.Invoke(itemToRemove);
+			}
+
+			return result;
 		}
 	}
 }
